@@ -35,11 +35,10 @@ public class StartActivity extends AppCompatActivity {
 
         //region Test Volley
         RequestQueue queue = Volley.newRequestQueue(this);
-        Random random = new Random();
-        int nbrRandom = 25 + random.nextInt(56);  // 80 - 25 + 1 = 56
 
-        @SuppressLint("DefaultLocale")
-        String url =String.format("https://dummyjson.com/quotes/%d",nbrRandom);
+
+
+        String url ="https://dummyjson.com/quotes/random";
 
         // Request a string response from the provided URL.
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(
@@ -49,7 +48,7 @@ public class StartActivity extends AppCompatActivity {
                     public void onResponse(JSONObject response) {
                         try {
                             tvStartActQuote.setText(response.getString("quote"));
-                            tvStartActAuthor.setText(response.getString("id"));
+                            tvStartActAuthor.setText(response.getString("author"));
                         } catch (JSONException e) {
                             throw new RuntimeException(e);
                         }
