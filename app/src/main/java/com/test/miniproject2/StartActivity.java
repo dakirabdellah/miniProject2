@@ -2,6 +2,7 @@ package com.test.miniproject2;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.widget.Button;
 import android.widget.TextView;
@@ -16,6 +17,8 @@ import com.android.volley.toolbox.Volley;
 
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import java.util.Random;
 
 public class StartActivity extends AppCompatActivity {
     TextView tvStartActQuote, tvStartActAuthor;
@@ -32,7 +35,11 @@ public class StartActivity extends AppCompatActivity {
 
         //region Test Volley
         RequestQueue queue = Volley.newRequestQueue(this);
-        String url = "https://dummyjson.com/quotes/random";
+        Random random = new Random();
+        int nbrRandom = 25 + random.nextInt(56);  // 80 - 25 + 1 = 56
+
+        @SuppressLint("DefaultLocale")
+        String url =String.format("https://dummyjson.com/quotes/%d",nbrRandom);
 
         // Request a string response from the provided URL.
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(
@@ -42,7 +49,7 @@ public class StartActivity extends AppCompatActivity {
                     public void onResponse(JSONObject response) {
                         try {
                             tvStartActQuote.setText(response.getString("quote"));
-                            tvStartActAuthor.setText(response.getString("author"));
+                            tvStartActAuthor.setText(response.getString("id"));
                         } catch (JSONException e) {
                             throw new RuntimeException(e);
                         }
