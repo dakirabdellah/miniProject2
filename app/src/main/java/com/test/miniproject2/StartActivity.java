@@ -33,7 +33,7 @@ public class StartActivity extends AppCompatActivity {
 
         //region Test Volley
         RequestQueue queue = Volley.newRequestQueue(this);
-        String url = "https://dummyjson.com/quotes/rando";
+        String url = "https://dummyjson.com/quotes/random";
 
         // Request a string response from the provided URL.
         StringRequest stringRequest = new StringRequest(
