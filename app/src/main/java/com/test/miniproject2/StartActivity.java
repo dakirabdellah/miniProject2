@@ -41,13 +41,37 @@ import com.android.volley.toolbox.Volley;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import androidx.appcompat.app.AppCompatActivity;
+
+import android.content.SharedPreferences;
+import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
+import android.widget.CompoundButton;
+import android.widget.ImageView;
+import android.widget.TextView;
+import android.widget.Toast;
+import android.widget.ToggleButton;
+
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
 public class StartActivity extends AppCompatActivity {
     TextView tvStartActQuote, tvStartActAuthor;
     Button btnStartActPass;
     ToggleButton tbStartActPinUnpin;
     SharedPreferences sharedPreferences;
+    ImageView ivStartActIsFavorite;
+    boolean isFavorite = false;
 
-    @SuppressLint("MissingInflatedId")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -57,6 +81,9 @@ public class StartActivity extends AppCompatActivity {
         tvStartActAuthor = findViewById(R.id.tvStartActAuthor);
         btnStartActPass = findViewById(R.id.btnStartActPass);
         tbStartActPinUnpin = findViewById(R.id.tbStartActPinUnpin);
+        ivStartActIsFavorite = findViewById(R.id.ivStartActIsFavorite);
+
+        //region Pin | Unpin Quote
 
         sharedPreferences = getSharedPreferences("pinned-quote", MODE_PRIVATE);
 
@@ -93,6 +120,21 @@ public class StartActivity extends AppCompatActivity {
                 editor.commit();
             }
         });
+
+        //endregion
+
+        //region Like | Dislike Quote
+
+        ivStartActIsFavorite.setOnClickListener(v -> {
+            if (isFavorite)
+                ivStartActIsFavorite.setImageResource(R.drawable.dislike);
+            else
+                ivStartActIsFavorite.setImageResource(R.drawable.like);
+
+            isFavorite = !isFavorite;
+        });
+
+        //endregion
 
         btnStartActPass.setOnClickListener(v -> {
             finish();
